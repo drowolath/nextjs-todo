@@ -30,7 +30,7 @@ export const TodoProvider: React.FC<TodoProviderProps> = ({ children }) => {
         const savedTodos = localStorage.getItem('todos');
         if (savedTodos) {
             try {
-                const parsedTodos = JSON.parse(savedTodos).map((todo: any) => ({
+                const parsedTodos = JSON.parse(savedTodos).map((todo: { id: string; text: string; completed: boolean; createdAt: string }) => ({
                 ...todo,
                 createdAt: new Date(todo.createdAt)
                 }));

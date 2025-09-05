@@ -12,8 +12,8 @@ const TodoList: React.FC = () => {
       <div className="text-center py-8 text-gray-500">
         {searchTerm ? (
           <>
-            <p className="mb-2">Aucune tâche trouvée pour "{searchTerm}"</p>
-            <p className="text-sm">Essayez avec d'autres mots-clés</p>
+            <p className="mb-2">Aucune tâche trouvée pour &ldquo;{searchTerm}&rdquo;</p>
+            <p className="text-sm">Essayez avec d&rsquo;autres mots-clés</p>
           </>
         ) : (
           <>
