@@ -15,4 +15,4 @@ COPY . .
 
 RUN npm run build
 
-CMD npm run start --port 8000
+CMD npm run start
