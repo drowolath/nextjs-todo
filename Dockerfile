@@ -6,13 +6,13 @@ RUN corepack enable pnpm
 WORKDIR /app
 
 # Copy package files for better caching
-COPY package.json pnpm-lock.yaml ./
+COPY package.json ./
 
 # Install dependencies
-RUN pnpm install --frozen-lockfile
+RUN npm install
 
 COPY . .
 
-RUN pnpm build
+RUN npm build
 
-CMD pnpm start --port 8000
+CMD npm start --port 8000
