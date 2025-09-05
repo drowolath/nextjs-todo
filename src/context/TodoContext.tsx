@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Todo, TodoContextType } from '../types/todo';
+import { Todo, TodoContextType, FilterStatus } from '../types/todo';
 
 
 const TodoContext = createContext<TodoContextType | undefined>(undefined);
@@ -21,6 +21,8 @@ interface TodoProviderProps {
 export const TodoProvider: React.FC<TodoProviderProps> = ({ children }) => {
     const [todos, setTodos] = useState<Todo[]>([]);
     const [searchTerm, setSearchTerm] = useState<string>('');
+    const [selectedTodos, setSelectedTodos] = useState<string[]>([]);
+    const [filterStatus, setFilterStatus] = useState<FilterStatus>('tout');
 
 
     // Charger les todos depuis localStorage au démarrage
@@ -43,6 +45,7 @@ export const TodoProvider: React.FC<TodoProviderProps> = ({ children }) => {
     useEffect(() => {
         localStorage.setItem('todos', JSON.stringify(todos));
     }, [todos]);
+
 
     // Ajouter une todo à la liste
     const addTodo = (text: string): void => {
@@ -67,25 +70,57 @@ export const TodoProvider: React.FC<TodoProviderProps> = ({ children }) => {
         );
     };
 
-    // Effacer toutes les todos
-    const clearAllTodos = (): void => {
-        setTodos([]);
+    // Basculer la sélection d'une todo
+    const toggleSelection = (id: string): void => {
+        setSelectedTodos(prevSelected =>
+            prevSelected.includes(id)
+                ? prevSelected.filter(todoId => todoId !== id)
+                : [...prevSelected, id]
+        );
     };
 
-    // Filtrer les todos simplement
-    const filteredTodos = todos.filter(todo =>
-        todo.text.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    // Sélectionner toutes les todos
+    const selectAll = (): void => {
+        setSelectedTodos(todos.map(todo => todo.id));
+    };
+
+    // Effacer la sélection
+    const clearSelection = (): void => {
+        setSelectedTodos([]);
+    };
+
+    // Supprimer les todos sélectionnées
+    const deleteSelected = (): void => {
+        setTodos(prevTodos => 
+            prevTodos.filter(todo => !selectedTodos.includes(todo.id))
+        );
+        setSelectedTodos([]);
+    };
+
+    // Filtrer les todos selon le status et le terme de recherche
+    const filteredTodos = todos.filter(todo => {
+        const matchesSearch = todo.text.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesStatus = filterStatus === 'tout' || 
+                             (filterStatus === 'fait' && todo.completed) ||
+                             (filterStatus === 'en cours' && !todo.completed);
+        return matchesSearch && matchesStatus;
+    });
 
 
     const value : TodoContextType = {
         todos,
         addTodo,
         toggleTodo,
-        clearAllTodos,
         searchTerm,
         setSearchTerm,
-        filteredTodos
+        filteredTodos,
+        selectedTodos,
+        toggleSelection,
+        selectAll,
+        clearSelection,
+        deleteSelected,
+        filterStatus,
+        setFilterStatus
     };
     return (
         <TodoContext.Provider value={value}>
