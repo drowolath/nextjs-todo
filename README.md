@@ -4,8 +4,11 @@
 
 ```
 <TodoProvider>
-  <div> Message </div>
-  <SearchBar />
-  <TodoList />
+    <div> Message </div>
+    <AddTodoForm />
+    <SearchBar />
+    <FilterTabs />
+    <SelectionControls />
+    <TodoList />
 </TodoProvider>
 ```
