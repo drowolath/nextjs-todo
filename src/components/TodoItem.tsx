@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Todo } from '../types/todo';
-
+import { useTodo } from '../context/TodoContext';
 
 interface TodoItemProps {
     todo: Todo;
@@ -10,6 +10,13 @@ interface TodoItemProps {
 
 
 const TodoItem: React.FC<TodoItemProps> = ({ todo }) => {
+
+    const { toggleTodo } = useTodo();
+
+    const handleToggle = (): void => {
+        toggleTodo(todo.id);
+    };
+
     return (
         <div className="flex items-center justify-between p-3 border border-gray-200 rounded-lg bg-white hover:shadow-sm transition-shadow">
             <div className="flex items-center flex-1 min-w-0">
