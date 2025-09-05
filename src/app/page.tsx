@@ -5,6 +5,7 @@ import { TodoProvider } from '../context/TodoContext';
 import SearchBar from '../components/SearchBar';
 import AddTodoForm from '../components/AddTodoForm';
 import TodoList from '../components/TodoList';
+import ClearAllButton from '@/components/ClearAllButton';
 
 export default function Home() {
   return (
@@ -23,6 +24,7 @@ export default function Home() {
             <AddTodoForm />
             <SearchBar />
             <TodoList />
+            <ClearAllButton />
           </div>
         </div>
       </div>

@@ -21,6 +21,7 @@ const TodoItem: React.FC<TodoItemProps> = ({ todo }) => {
         <div className="flex items-center justify-between p-3 border border-gray-200 rounded-lg bg-white hover:shadow-sm transition-shadow">
             <div className="flex items-center flex-1 min-w-0">
                 <button
+                    onClick={handleToggle}
                     className="flex-shrink-0 mr-3"
                     aria-label={todo.completed ? 'Marquer comme non terminée' : 'Marquer comme terminée'}
                 >
