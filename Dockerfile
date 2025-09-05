@@ -1,7 +1,7 @@
 FROM node:18-alpine
 
-# Enable pnpm
-RUN corepack enable pnpm
+# Enable npm
+RUN corepack enable npm
 
 WORKDIR /app
 
@@ -13,6 +13,6 @@ RUN npm install
 
 COPY . .
 
-RUN npm build
+RUN npm run build
 
-CMD npm start --port 8000
+CMD npm run start --port 8000
