@@ -19,8 +19,17 @@ interface TodoProviderProps {
 }
 
 export const TodoProvider: React.FC<TodoProviderProps> = ({ children }) => {
+    const value : TodoContextType = {
+        todos,
+        addTodo,
+        toggleTodo,
+        clearAllTodos,
+        searchTerm,
+        setSearchTerm,
+        filteredTodos
+    };
     return (
-        <TodoContext.Provider value={undefined}>
+        <TodoContext.Provider value={value}>
             {children}
         </TodoContext.Provider>
     );
